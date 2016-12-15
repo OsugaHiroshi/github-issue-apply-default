@@ -3,7 +3,7 @@
 var githubhook = require('githubhook');
 var github = githubhook({
   port:process.env.PORT || 5000,
-  path: '/hoge'
+  path: process.env.ENTRY_POINT
 });
 
 var GitHubAPI = require('github');
@@ -16,10 +16,8 @@ githubClient.authenticate({
 
 github.listen();
 
-var REPOS_WHITE_LIST = [
-  'hoge/fuga',
-  'foo/bar'
-];
+//hook起動だからいらねーかも知れないけど、hookとtokenの権限が1:1ではないのであってもいいと思う
+var REPOS_WHITE_LIST = process.env.TARGET_REPOS.split(',');
 
 github.on('issues', function (event, repo, ref, data) {
   var action = ref.action;
