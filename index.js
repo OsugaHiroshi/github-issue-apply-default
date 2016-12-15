@@ -2,7 +2,8 @@
 /* eslint-disable no-unused-vars */
 var githubhook = require('githubhook');
 var github = githubhook({
-  port:process.env.PORT || 5000
+  port:process.env.PORT || 5000,
+  path: '/hoge'
 });
 
 var GitHubAPI = require('github');
