@@ -16,9 +16,6 @@ githubClient.authenticate({
 
 github.listen();
 
-//hook起動だからいらねーかも知れないけど、hookとtokenの権限が1:1ではないのであってもいいと思う
-var REPOS_WHITE_LIST = process.env.TARGET_REPOS.split(',');
-
 github.on('issues', function (event, repo, ref, data) {
   var action = ref.action;
   var issue = ref.issue;
@@ -27,13 +24,6 @@ github.on('issues', function (event, repo, ref, data) {
   console.log('> check action');
   console.log(action);
   if ( action != 'opened' ) {
-    return;
-  }
-
-  console.log('> check repository');
-  console.log( REPOS_WHITE_LIST );
-  console.log( repository.full_name );
-  if ( REPOS_WHITE_LIST.indexOf( repository.full_name ) < 0 ) {
     return;
   }
 
