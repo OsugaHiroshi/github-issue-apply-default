@@ -43,13 +43,25 @@ github.on('issues', function (event, repo, ref, data) {
     console.log(err);
     console.log(res);
   });
+
+
+  if (metaInfo.project_column) {
+    console.log('project operation');
+    const {project_column} = metaInfo;
+    githubClient.projects.createProjectCard({
+      column_id: project_column,
+      content_id: issue.id,
+      content_type: 'Issue'
+    });
+  }
 });
 
 function parseMetaInfo(issueBody) {
   var KEYS_WHITE_LIST = [
     'assignee',
     'labels',
-    'milestone'
+    'milestone',
+    'project_column'
   ];
   var TARGET_LINE_REGEX = '^%% (.+)=(.+)';
   var lines = issueBody.split(/\r|\n/);
